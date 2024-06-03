@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My Notes</title>
+    <title>My notes</title>
 
     <link rel="stylesheet" href="/static/css/style.css">
 
@@ -13,7 +13,67 @@
 
 </head>
 
-<body>
+<body class="myNotes-body">
+
+    {% include 'header.html' %}
+
+    <div class="container-for-all-notes">
+        <header>
+            <h1>My Notes</h1>
+        </header>
+        <section class="filter-section">
+            <input type="text" id="search" placeholder="Search by name...">
+            <input type="date" id="date-filter">
+            <select id="type-filter">
+                <option value="">All Types</option>
+                <option value="it">IT Sector</option>
+                <option value="agriculture">Agriculture</option>
+            </select>
+        </section>
+        <section class="notes-section">
+            <div class="note">
+                <h2>Note Title 1</h2>
+                <p>Type: IT Sector</p>
+                <p>Date: 2024-06-01</p>
+                <p>Content of the note goes here...</p>
+                <button class="btn-openNote">Open note</button>
+            </div>
+            <div class="note">
+                <h2>Note Title 2</h2>
+                <p>Type: Agriculture</p>
+                <p>Date: 2024-05-15</p>
+                <p>Content of the note goes here...</p>
+                <button class="btn-openNote">Open note</button>
+            </div>
+            <div class="note">
+                <h2>Note Title 2</h2>
+                <p>Type: Agriculture</p>
+                <p>Date: 2024-05-15</p>
+                <p>Content of the note goes here...</p>
+                <button class="btn-openNote">Open note</button>
+            </div>
+            <div class="note">
+                <h2>Note Title 2</h2>
+                <p>Type: Agriculture</p>
+                <p>Date: 2024-05-15</p>
+                <p>Content of the note goes here...</p>
+                <button class="btn-openNote">Open note</button>
+            </div>
+        </section>
+    </div>
+
+    <div id="noteModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Note Title</h2>
+            <p id="modalType">Type: </p>
+            <p id="modalDate">Date: </p>
+            <p id="modalContent">Content of the note goes here...</p>
+            <button class="btn-forNote">Change note</button>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
 
 </body>
 

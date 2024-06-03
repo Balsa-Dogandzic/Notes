@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+
+    <title>Registration</title>
 
     <link rel="stylesheet" href="/static/css/style.css">
 
@@ -12,7 +13,28 @@
 
 </head>
 
-<body>
+<body class="register-background">
+
+    {% include 'header.html' %}
+
+    <div class="form-container">
+        <form class="register-form" action="/register/" method="post">
+            <h2>Register</h2>
+            {% if message %}
+            <span style="color: red;">{{message}}</span><br><br>
+            {% endif %}
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+            <button type="submit">Register</button><br><br>
+            <a href="/login/">Have an account? Sign in!</a>
+        </form>
+    </div>
 
 </body>
 

@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+
+    <title>Log in</title>
 
     <link rel="stylesheet" href="/static/css/style.css">
 
@@ -12,7 +13,24 @@
 
 </head>
 
-<body>
+<body class="login-background">
+
+    {% include 'header.html' %}
+
+    <div class="form-container">
+        <form class="login-form" action="/login/" method="post">
+            <h2>Log in</h2>
+            {% if message %}
+            <span style="color: red;">{{message}}</span><br><br>
+            {% endif %}
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Log in</button><br><br>
+            <a href="/register/">Register account</a>
+        </form>
+    </div>
 
 </body>
 
