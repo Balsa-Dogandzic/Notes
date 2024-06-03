@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    height: 80px;
+}
+.logo {
+    margin: 0 20px;
+    height: 140px;
+}
+.tabs {
+    display: flex;
+    margin: 0 20px;
+}
+.tab {
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.tab:hover {
+    cursor: pointer;
+    background-color: rgba(255, 99, 71, 0.637);
+}
+
+.tab.note {
+    background-color: tomato;
+    color: white;
+}
+
