@@ -1,7 +1,8 @@
 import markdown
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
+import markdown
 
 app = Flask(__name__, static_url_path='/static/')
 app.config['SECRET_KEY'] = '88932b3fa37fc7378ede32684eaa9972'
@@ -16,7 +17,25 @@ mysql = MySQL(app)
 
 @app.route('/')
 def notes_page():
-    return render_template("index.html")
+    if not session.get('logged'):
+        return redirect('/login/')
+    cursor = mysql.connection.cursor()
+    cursor.execute(f"SELECT * FROM notes WHERE user_id='{session.get('user_id')}'")
+    notes = cursor.fetchall()
+    cursor.close()
+    return render_template("index.html", notes=notes)
+
+
+@app.route('/note/<int:id>/')
+def get_note(id):
+    cursor = mysql.connection.cursor()
+    cursor.execute(f"SELECT * FROM notes WHERE id={id}")
+    note = cursor.fetchone()
+    cursor.close()
+    md = markdown.Markdown(extensions=["fenced_code"])
+    content = md.convert(note['content'])
+    response = jsonify({'title': note['title'], 'created_at':note['created_at'], 'modified_at': note['modified_at'], 'content': content})
+    return response
 
 
 # Autentifikacija

@@ -31,49 +31,56 @@
             </select>
         </section>
         <section class="notes-section">
+            {% for note in notes %}
             <div class="note">
-                <h2>Note Title 1</h2>
-                <p>Type: IT Sector</p>
-                <p>Date: 2024-06-01</p>
-                <p>Content of the note goes here...</p>
-                <button class="btn-openNote">Open note</button>
+                <h2>{{note.title}}</h2>
+                <p>Created: {{note.created_at}}</p>
+                <p>Modified: {{note.modified_at}}</p>
+                <p>{{note.get('content')[:80]}}{% if note.get('content')|length > 80 %}...{% endif %}</p>
+                <button class="btn-openNote" onclick="showNote({{note.id}})">Open note</button>
             </div>
-            <div class="note">
-                <h2>Note Title 2</h2>
-                <p>Type: Agriculture</p>
-                <p>Date: 2024-05-15</p>
-                <p>Content of the note goes here...</p>
-                <button class="btn-openNote">Open note</button>
-            </div>
-            <div class="note">
-                <h2>Note Title 2</h2>
-                <p>Type: Agriculture</p>
-                <p>Date: 2024-05-15</p>
-                <p>Content of the note goes here...</p>
-                <button class="btn-openNote">Open note</button>
-            </div>
-            <div class="note">
-                <h2>Note Title 2</h2>
-                <p>Type: Agriculture</p>
-                <p>Date: 2024-05-15</p>
-                <p>Content of the note goes here...</p>
-                <button class="btn-openNote">Open note</button>
-            </div>
+            {% endfor %}
         </section>
     </div>
 
     <div id="noteModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2 id="modalTitle">Note Title</h2>
-            <p id="modalType">Type: </p>
-            <p id="modalDate">Date: </p>
-            <p id="modalContent">Content of the note goes here...</p>
+            <h2 id="modalTitle"></h2>
+            <p id="modalCreated">Created at: </p>
+            <p id="modalModified">Modified at: </p>
+            <p id="modalContent"></p>
             <button class="btn-forNote">Change note</button>
         </div>
     </div>
 
-    <script src="/static/js/main.js"></script>
+    <!--<script src="/static/js/main.js"></script> -->
+    <script>
+        const modal = document.getElementById('noteModal');
+        const span = document.getElementsByClassName('close')[0];
+
+        function showNote(noteId) {
+            fetch(`/note/${noteId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('modalTitle').innerText = data.title;
+                    document.getElementById('modalCreated').innerText = data.created_at;
+                    document.getElementById('modalModified').innerText = data.modified_at;
+                    document.getElementById('modalContent').innerHTML = data.content;
+
+                    modal.style.display = 'block';
+                });
+        }
+        span.onclick = function () {
+            modal.style.display = 'none';
+        };
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        };
+    </script>
 
 </body>
 
