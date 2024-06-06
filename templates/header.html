@@ -1,13 +1,13 @@
 <div class="header">
     <div class="tabs">
         <a href="/" class="tab">My Notes</a>
-        <a href="writeNote.html" class="tab">Write note</a>
+        <a href="/note/add/" class="tab">Write note</a>
     </div>
     <a href="/">
         <img src="/static/Images/logo-myNotes.png" alt="Logo" class="logo">
     </a>
     <div class="tabs">
-        <a href="changeNote.html" class="tab">Change note</a>
+        <a href="/about/" class="tab">About us</a>
         {% if session.get('logged') %}
         <a href="/logout/" class="tab note">Log out</a>
         {% else %}

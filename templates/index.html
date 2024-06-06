@@ -49,38 +49,14 @@
             <h2 id="modalTitle"></h2>
             <p id="modalCreated">Created at: </p>
             <p id="modalModified">Modified at: </p>
+            <p id="modalTags">Tags: </p>
             <p id="modalContent"></p>
-            <button class="btn-forNote">Change note</button>
+            <a class="btn-forNote" id="update" href="/">Change note</a>
+            <a class="btn-forNote" id="delete" href="/">Delete note</a>
         </div>
     </div>
 
-    <!--<script src="/static/js/main.js"></script> -->
-    <script>
-        const modal = document.getElementById('noteModal');
-        const span = document.getElementsByClassName('close')[0];
-
-        function showNote(noteId) {
-            fetch(`/note/${noteId}/`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('modalTitle').innerText = data.title;
-                    document.getElementById('modalCreated').innerText = data.created_at;
-                    document.getElementById('modalModified').innerText = data.modified_at;
-                    document.getElementById('modalContent').innerHTML = data.content;
-
-                    modal.style.display = 'block';
-                });
-        }
-        span.onclick = function () {
-            modal.style.display = 'none';
-        };
-
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        };
-    </script>
+    <script src="/static/js/main.js"></script>
 
 </body>
 

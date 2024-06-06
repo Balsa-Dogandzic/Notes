@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add note</title>
+</head>
+
+<body>
+
+    <form action="/note/add/" method="post">
+        <input type="text" placeholder="Note title" name="title">
+        {% for tag in tags %}
+        <div>
+            <input type="checkbox" value="{{tag.id}}" id="{{tag.tag}}" name="tags" />
+            <label for="{{tag.tag}}">{{tag.tag}}</label>
+        </div>
+        {% endfor %}
+        <textarea name="note" placeholder="note"></textarea>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+</body>
+
+</html>

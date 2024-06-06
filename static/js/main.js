@@ -1,31 +1,45 @@
-// Modal window index.html
+const modal = document.getElementById("noteModal");
+const span = document.getElementsByClassName("close")[0];
 
-document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('noteModal');
-    const span = document.getElementsByClassName('close')[0];
+async function showNote(noteId) {
+  try {
+    const response = await fetch(`/note/${noteId}/`);
+    const data = await response.json();
 
-    document.querySelectorAll('.btn-openNote').forEach((btn) => {
-        btn.addEventListener('click', function () {
-            const note = this.parentElement;
-            document.getElementById('modalTitle').innerText = note.querySelector('h2').innerText;
-            document.getElementById('modalType').innerText = note.querySelector('p:nth-of-type(1)').innerText;
-            document.getElementById('modalDate').innerText = note.querySelector('p:nth-of-type(2)').innerText;
-            document.getElementById('modalContent').innerText = note.querySelector('p:nth-of-type(3)').innerText;
+    document.getElementById("modalTitle").innerText = data.title;
+    document.getElementById("modalCreated").innerText = data.created_at;
+    document.getElementById("modalModified").innerText = data.modified_at;
+    document.getElementById("modalContent").innerHTML = data.content;
 
-            modal.style.display = 'block';
-        });
-    });
+    document.getElementById("update").href = `/note/update/${noteId}/`;
+    document.getElementById("delete").href = `/note/delete/${noteId}/`;
 
-    span.onclick = function () {
-        modal.style.display = 'none';
-    };
+    const tagsElement = document.getElementById("modalTags");
+    tagsElement.innerText = "Tags: ";
 
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    };
-});
+    for (let i = 0; i < data.tags.length; i++) {
+      if (i + 1 === data.tags.length) {
+        tagsElement.innerText += data.tags[i].tag + ".";
+        console.log(tagsElement.innerText);
+      } else {
+        tagsElement.innerText += data.tags[i].tag + ", ";
+        console.log(tagsElement.innerText);
+      }
+    }
 
-// Filter search
+    const modal = document.getElementById("noteModal");
+    modal.style.display = "block";
+  } catch (error) {
+    console.error("Error fetching and displaying note:", error);
+  }
+}
 
+span.onclick = function () {
+  modal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};

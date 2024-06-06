@@ -2,7 +2,7 @@ import markdown
 from flask import Flask, render_template, request, redirect, session, jsonify
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
-import markdown
+import markdown, datetime, re
 
 app = Flask(__name__, static_url_path='/static/')
 app.config['SECRET_KEY'] = '88932b3fa37fc7378ede32684eaa9972'
@@ -15,12 +15,32 @@ app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 
 mysql = MySQL(app)
 
+
+def escape_special_characters(text):
+    escape_dict = {
+        '\\': '\\\\',
+        '\'': '\\\'',
+        '\"': '\\\"',
+        '\n': '\\n',
+        '\r': '\\r',
+        '\x00': '\\0',
+        '\x1a': '\\Z'
+    }
+    regex = re.compile('|'.join(re.escape(key) for key in escape_dict.keys()))
+    return regex.sub(lambda match: escape_dict[match.group(0)], text)
+
+
+@app.route('/about/')
+def about():
+    return render_template("about.html")
+
+
 @app.route('/')
 def notes_page():
     if not session.get('logged'):
         return redirect('/login/')
     cursor = mysql.connection.cursor()
-    cursor.execute(f"SELECT * FROM notes WHERE user_id='{session.get('user_id')}'")
+    cursor.execute(f"SELECT * FROM notes WHERE user_id={session.get('user_id')} ORDER BY modified_at DESC")
     notes = cursor.fetchall()
     cursor.close()
     return render_template("index.html", notes=notes)
@@ -31,11 +51,67 @@ def get_note(id):
     cursor = mysql.connection.cursor()
     cursor.execute(f"SELECT * FROM notes WHERE id={id}")
     note = cursor.fetchone()
+    cursor.execute(f"SELECT tags.tag FROM note_tags JOIN tags ON tags.id = note_tags.tag_id WHERE note_id={id}")
+    tags = cursor.fetchall()
     cursor.close()
     md = markdown.Markdown(extensions=["fenced_code"])
     content = md.convert(note['content'])
-    response = jsonify({'title': note['title'], 'created_at':note['created_at'], 'modified_at': note['modified_at'], 'content': content})
+    response = jsonify({'title': note['title'], 'created_at':note['created_at'], 'modified_at': note['modified_at'], 'tags': tags, 'content': content})
     return response
+
+
+@app.route('/note/add/', methods=['GET', 'POST'])
+def add_note():
+    if request.method == 'POST':
+        title = escape_special_characters(request.form['title'])
+        checked_tags = request.form.getlist('tags')
+        note = escape_special_characters(request.form['note'])
+        today = datetime.datetime.now()
+        cursor = mysql.connection.cursor()
+        cursor.execute(f"INSERT INTO notes VALUES (NULL,'{title}','{note}', '{today}', '{today}', {session.get('user_id')})")
+        mysql.connection.commit()
+        memo_id = cursor.lastrowid
+        for tag in checked_tags:
+            cursor.execute(f"INSERT INTO note_tags VALUES (NULL, {memo_id}, {tag})")
+            mysql.connection.commit()
+        cursor.close()
+        return redirect("/")
+    cursor = mysql.connection.cursor()
+    cursor.execute(f"SELECT * FROM tags ORDER BY tag")
+    tags = cursor.fetchall()
+    cursor.close()
+    if not session.get('logged'):
+        return redirect('/login/')
+    return render_template("add_note.html", tags=tags)
+
+
+@app.route('/note/update/<int:id>/', methods=['GET', 'POST'])
+def update_note(id):
+    if request.method == 'POST':
+        title = escape_special_characters(request.form['title'])
+        note = escape_special_characters(request.form['note'])
+        today = datetime.datetime.now()
+        cursor = mysql.connection.cursor()
+        cursor.execute(f"UPDATE notes SET title='{title}', content='{note}', modified_at='{today}' WHERE id={id}")
+        mysql.connection.commit()
+        return redirect("/")
+    cursor = mysql.connection.cursor()
+    cursor.execute(f"SELECT * FROM notes WHERE id={id}")
+    note = cursor.fetchone()
+    cursor.close()
+    if not session.get('logged'):
+        return redirect('/login/')
+    return render_template("update_note.html", note=note)
+
+
+@app.route('/note/delete/<int:id>/')
+def delete_note(id):
+    if not session.get('logged'):
+        return redirect('/login/')
+    cursor = mysql.connection.cursor()
+    cursor.execute(f"DELETE FROM notes WHERE id={id}")
+    mysql.connection.commit()
+    return redirect('/')
 
 
 # Autentifikacija
