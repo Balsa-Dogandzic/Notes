@@ -39,6 +39,15 @@ def about():
 def notes_page():
     if not session.get('logged'):
         return redirect('/login/')
+    title = request.args.get('title')
+    date = request.args.get('date')
+    if title and date:
+        date = datetime.datetime.strptime(date, '%Y-%m-%d')
+        cursor = mysql.connection.cursor()
+        cursor.execute(f"SELECT * FROM notes WHERE user_id={session.get('user_id')} and title LIKE '%{title}%' AND created_at >= '{date}' ORDER BY modified_at DESC")
+        notes = cursor.fetchall()
+        cursor.close()
+        return render_template("index.html", notes=notes)
     cursor = mysql.connection.cursor()
     cursor.execute(f"SELECT * FROM notes WHERE user_id={session.get('user_id')} ORDER BY modified_at DESC")
     notes = cursor.fetchall()
@@ -112,9 +121,6 @@ def delete_note(id):
     cursor.execute(f"DELETE FROM notes WHERE id={id}")
     mysql.connection.commit()
     return redirect('/')
-
-
-# Autentifikacija
 
 
 @app.route('/login/', methods=['GET', 'POST'])

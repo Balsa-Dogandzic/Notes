@@ -28,7 +28,7 @@ async function showNote(noteId) {
     }
 
     const modal = document.getElementById("noteModal");
-    modal.style.display = "block";
+    modal.style.display = "flex";
   } catch (error) {
     console.error("Error fetching and displaying note:", error);
   }

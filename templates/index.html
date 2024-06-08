@@ -21,15 +21,13 @@
         <header>
             <h1>My Notes</h1>
         </header>
-        <section class="filter-section">
-            <input type="text" id="search" placeholder="Search by name...">
-            <input type="date" id="date-filter">
-            <select id="type-filter">
-                <option value="">All Types</option>
-                <option value="it">IT Sector</option>
-                <option value="agriculture">Agriculture</option>
-            </select>
-        </section>
+        <form action="/" method="get">
+            <section class="filter-section">
+                <input type="text" id="search" placeholder="Search by name..." name="title" required>
+                <input type="date" id="date-filter" name="date" required>
+                <input type="submit" value="Submit">
+            </section>
+        </form>
         <section class="notes-section">
             {% for note in notes %}
             <div class="note">
@@ -37,7 +35,7 @@
                 <p>Created: {{note.created_at}}</p>
                 <p>Modified: {{note.modified_at}}</p>
                 <p>{{note.get('content')[:80]}}{% if note.get('content')|length > 80 %}...{% endif %}</p>
-                <button class="btn-openNote" onclick="showNote({{note.id}})">Open note</button>
+                <button class="btn-openNote" onclick="showNote('{{note.id}}')">Open note</button>
             </div>
             {% endfor %}
         </section>
