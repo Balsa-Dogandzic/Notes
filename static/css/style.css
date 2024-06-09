@@ -55,7 +55,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 1rem 0;
 }
 
 .login-form,
@@ -275,4 +276,135 @@ header h1 {
 }
 .myNotes-body {
   background: radial-gradient(#d9afd9, #97d9e1);
+}
+
+/* stranica write_note.html */
+
+.container-for-write-note {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 400px;
+}
+
+.note-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.note-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.note-form input[type="text"],
+.note-form textarea {
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+}
+
+.note-form .checkbox-group {
+  margin-bottom: 15px;
+}
+
+.note-form .checkbox-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.note-form .checkbox-group input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.note-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: tomato;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.note-form button:hover {
+  background-color: rgba(216, 79, 55, 0.881);
+}
+
+/* about stranica */
+
+main {
+  padding: 4em 0;
+  background: linear-gradient(to right, #ece9e6, #ffffff);
+}
+
+.about-us .container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 3em;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.about-us h2 {
+  text-align: center;
+  color: tomato;
+  margin-bottom: 1em;
+  font-size: 2.5em;
+  letter-spacing: 1px;
+}
+
+.about-us h3 {
+  color: #333;
+  margin-top: 1.5em;
+  font-size: 1.8em;
+}
+
+.about-us p,
+.about-us ul,
+.about-us blockquote {
+  line-height: 1.8;
+  font-size: 1.1em;
+  margin-bottom: 1em;
+}
+
+.about-us ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+}
+
+.about-us a {
+  color: tomato;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.about-us a:hover {
+  text-decoration: underline;
+}
+
+.about-us blockquote {
+  background-color: #f0f0f0;
+  border-left: 5px solid tomato;
+  margin: 1em 0;
+  padding: 1em;
+  font-style: italic;
+  color: #555;
+}
+
+.about-us blockquote p {
+  margin: 0;
 }

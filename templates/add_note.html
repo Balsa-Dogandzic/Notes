@@ -4,23 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add note</title>
+
+    <title>Write note</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <link rel="icon" type="image/x-icon" href="/static/Images/favicon.ico">
+
 </head>
 
-<body>
+<body class="myNotes-body">
 
-    <form action="/note/add/" method="post">
-        <input type="text" placeholder="Note title" name="title">
-        {% for tag in tags %}
-        <div>
-            <input type="checkbox" value="{{tag.id}}" id="{{tag.tag}}" name="tags" />
-            <label for="{{tag.tag}}">{{tag.tag}}</label>
+    {% include 'header.html' %}
+
+    <div class="form-container">
+        <div class="container-for-write-note">
+            <form class="note-form" action="/note/add/" method="post">
+                <h2>Create a New Note</h2>
+                <label for="note-title">Note Title</label>
+                <input type="text" id="note-title" placeholder="Note title..." name="title" required>
+
+                <label for="categories">Categories</label>
+                <div class="checkbox-group">
+                    {% for tag in tags %}
+                    <label for="{{tag.tag}}"><input type="checkbox" name="tags" value="{{tag.id}}" id="{{tag.tag}}">
+                        {{tag.tag}}</label>
+                    {% endfor %}
+                </div>
+
+                <label for="note-content">Note Content</label>
+                <textarea id="note-content" placeholder="Note..." name="note" rows="10" required></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
         </div>
-        {% endfor %}
-        <textarea name="note" placeholder="note"></textarea>
-        <br>
-        <input type="submit" value="Submit">
-    </form>
+    </div>
 
 </body>
 

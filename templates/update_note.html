@@ -4,18 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add note</title>
+
+    <title>Write note</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <link rel="icon" type="image/x-icon" href="/static/Images/favicon.ico">
+
 </head>
 
-<body>
+<body class="myNotes-body">
 
-    <form action="/note/update/{{note.id}}/" method="post">
-        <input type="text" placeholder="Note title" name="title" value="{{note.title}}">
-        <br>
-        <textarea name="note" placeholder="note">{{note.content}}</textarea>
-        <br>
-        <input type="submit" value="Submit">
-    </form>
+    {% include 'header.html' %}
+
+    <div class="form-container">
+        <div class="container-for-write-note">
+            <form class="note-form" action="/note/update/{{note.id}}/" method="post">
+                <h2>Update a note</h2>
+                <label for="note-title">Note Title</label>
+                <input type="text" id="note-title" placeholder="Note title..." name="title" value="{{note.title}}"
+                    required>
+
+                <label for="note-content">Note Content</label>
+                <textarea id="note-content" placeholder="Note..." name="note" rows="10"
+                    required>{{note.content}}</textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 
 </body>
 

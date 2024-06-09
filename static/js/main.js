@@ -20,10 +20,8 @@ async function showNote(noteId) {
     for (let i = 0; i < data.tags.length; i++) {
       if (i + 1 === data.tags.length) {
         tagsElement.innerText += data.tags[i].tag + ".";
-        console.log(tagsElement.innerText);
       } else {
         tagsElement.innerText += data.tags[i].tag + ", ";
-        console.log(tagsElement.innerText);
       }
     }
 
