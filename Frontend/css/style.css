@@ -233,3 +233,77 @@ header h1 {
 .myNotes-body {
     background: radial-gradient(#d9afd9, #97d9e1);
 }
+
+/* stranica write_note.html */
+
+.myNotes-body {
+    background-color: #f7f9fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+}
+
+.container-for-write-note {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px;
+}
+
+.note-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.note-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.note-form input[type="text"],
+.note-form textarea {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 16px;
+}
+
+.note-form .checkbox-group {
+    margin-bottom: 15px;
+}
+
+.note-form .checkbox-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.note-form .checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.note-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: tomato;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.note-form button:hover {
+    background-color: rgba(216, 79, 55, 0.881);
+}

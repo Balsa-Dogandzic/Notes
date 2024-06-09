@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Write note</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body class="myNotes-body">
+
+    <div class="container-for-write-note">
+        <form class="note-form">
+            <h2>Create a New Note</h2>
+            <label for="note-title">Note Title</label>
+            <input type="text" id="note-title" placeholder="Note title..." name="note-title" required>
+
+            <label for="categories">Categories</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="categories" value="educational"> Educational</label>
+                <label><input type="checkbox" name="categories" value="finance"> Finance</label>
+                <label><input type="checkbox" name="categories" value="travel"> Travel</label>
+                <label><input type="checkbox" name="categories" value="personal"> Personal</label>
+                <label><input type="checkbox" name="categories" value="work"> Work</label>
+                <label><input type="checkbox" name="categories" value="miscellaneous"> Miscellaneous</label>
+                <label><input type="checkbox" name="categories" value="shopping"> Shopping</label>
+                <label><input type="checkbox" name="categories" value="task"> Task</label>
+            </div>
+
+            <label for="note-content">Note Content</label>
+            <textarea id="note-content" placeholder="Note..." name="note-content" rows="10" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
